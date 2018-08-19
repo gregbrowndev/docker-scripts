@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecret
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      # This allows Datagrip, PgAdmin, etc. to connect to the database
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+        - "8080:8080"
+
+  pgadmin:
+    image: fenglc/pgadmin4
+    restart: always
+    environment:
+      DEFAULT_USER: admin
+    ports:
+      - "5050:5050"
+
+volumes:
+  postgres-data:
