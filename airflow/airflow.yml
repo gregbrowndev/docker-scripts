@@ -20,8 +20,10 @@ services:
             - LOAD_EX=n
             - EXECUTOR=Local
             - AIRFLOW__CORE__LOGGING_LEVEL=WARNING
+            - AIRFLOW__SCHEDULER__CATCHUP_BY_DEFAULT=FALSE
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - /home/gbrown/Development/situations_ingestor:/apps/situations_ingestor
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         ports:
