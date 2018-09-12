@@ -34,3 +34,9 @@ services:
             interval: 30s
             timeout: 30s
             retries: 3
+
+    splash:
+        image: scrapinghub/splash
+        restart: always
+        ports:
+            - "8050:8050"
