@@ -2,7 +2,8 @@ version: '3.1'
 
 services:
   postgres:
-    image: postgres
+    build: .
+    image: postgis
     restart: always
     environment:
       POSTGRES_PASSWORD: mysecret
