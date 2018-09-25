@@ -1,0 +1,2 @@
+slackclient==1.2.1
+pipenv==2018.7.1

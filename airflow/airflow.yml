@@ -1,0 +1,44 @@
+# see https://github.com/puckel/docker-airflow/blob/master/docker-compose-LocalExecutor.yml
+version: '2.1'
+services:
+    postgres:
+        image: postgres:9.6
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+        ports:
+            - "54320:5432"
+
+    webserver:
+        build: .
+        image: airflow
+        restart: always
+        depends_on:
+            - postgres
+            - splash
+        environment:
+            - LOAD_EX=n
+            - EXECUTOR=Local
+            - AIRFLOW__CORE__LOGGING_LEVEL=WARNING
+            - AIRFLOW__SCHEDULER__CATCHUP_BY_DEFAULT=FALSE
+        volumes:
+            - ./dags:/usr/local/airflow/dags
+            - ./apps:/apps
+            # - /home/gbrown/Development/situations_ingestor:/apps/situations_ingestor
+            # Uncomment to include custom plugins
+            # - ./plugins:/usr/local/airflow/plugins
+        ports:
+            - "8080:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+
+    splash:
+        image: scrapinghub/splash
+        restart: always
+        ports:
+            - "8050:8050"
