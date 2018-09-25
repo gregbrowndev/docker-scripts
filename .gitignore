@@ -1,3 +1,4 @@
 **/__pycache__/
 
 airflow/dags/situations_ingester_dag\.py
+airflow/apps/
