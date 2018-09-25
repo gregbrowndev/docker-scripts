@@ -13,7 +13,7 @@ jobs for all projects without specific runners. Using the Gitlab runner service 
 runner:
 
 ```shell
-docker run --rm -t -i -v /srv/gitlab-runner/config:/etc/gitlab-runner --name gitlab-runner gitlab/gitlab-runner register
+docker run --rm -t -i -v $PWD/config:/etc/gitlab-runner --name gitlab-runner gitlab/gitlab-runner register
 ```
 
 Then answer the setup options. Note:
