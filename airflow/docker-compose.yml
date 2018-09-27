@@ -1,0 +1,47 @@
+version: '3'
+volumes:
+    airflow-logs: 
+    pg_data:
+
+services:
+    webserver:
+        build: .
+        image: airflow
+        depends_on:
+            - postgres
+            - splash
+        environment:
+            - LOAD_EX=n
+            - EXECUTOR=Local
+            - AIRFLOW__CORE__LOGGING_LEVEL=WARNING
+            - AIRFLOW__SCHEDULER__CATCHUP_BY_DEFAULT=FALSE
+        volumes:
+            - './dags:/usr/local/airflow/dags'
+            - './apps:/apps'
+            - 'airflow-logs:/usr/local/airflow/logs'
+        ports:
+            - '8080:8080'
+        command: webserver
+        healthcheck:
+            test: [CMD-SHELL, '[ -f /usr/local/airflow/airflow-webserver.pid ]']
+            interval: 30s
+            timeout: 30s
+            retries: 3
+            
+    postgres:
+        image: 'postgres:9.6'
+        restart: always
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+        ports:
+            - '54320:5432'
+        volumes:
+            - 'pg_data:/var/lib/postgresql/data'
+
+    splash:
+        image: scrapinghub/splash
+        restart: always
+        ports:
+            - '8050:8050'
