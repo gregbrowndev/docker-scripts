@@ -3,3 +3,5 @@
 airflow/dags/situations_ingester_dag\.py
 airflow/apps/
 gitlab-runner/config/config\.toml
+
+airflow/\.env

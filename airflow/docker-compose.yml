@@ -5,7 +5,12 @@ volumes:
 
 services:
     webserver:
-        build: .
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+            args:
+                - UID=${UID:?UID not set. Add to .env or export using `UID=$(id -u)`}
+                - GID=${GID:?GID not set. Add to .env or export using `UID=$(id -g)`}
         image: airflow
         depends_on:
             - postgres
@@ -15,6 +20,8 @@ services:
             - EXECUTOR=Local
             - AIRFLOW__CORE__LOGGING_LEVEL=WARNING
             - AIRFLOW__SCHEDULER__CATCHUP_BY_DEFAULT=FALSE
+        env_file:
+            - .env
         volumes:
             - './dags:/usr/local/airflow/dags'
             - './apps:/apps'

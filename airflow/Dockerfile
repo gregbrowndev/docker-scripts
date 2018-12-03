@@ -1,6 +1,19 @@
-FROM puckel/docker-airflow:1.10.0-2
+FROM puckel/docker-airflow
 
 USER root
+
+# Mirror credentials of the host user to run the container.
+# ARG UNAME=django  # Using static name since COPY --chown doesn't support ARGs!
+ARG UID=1000
+ARG GID=20
+
+# Update permissions on airflow user files
+# -xdev option ignores proc related errors, see https://askubuntu.com/a/1038226/567843
+RUN find / -xdev -user airflow -exec chown -h $UID:$GID {} \;
+
+# Update existing airflow user
+RUN usermod --non-unique --uid $UID airflow && groupmod --non-unique --gid $GID airflow
+
 
 # Install Airflow DAG dependencies
 # RUN add-apt-repository main && \
