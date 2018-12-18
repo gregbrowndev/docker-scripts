@@ -25,6 +25,27 @@ When registering a runner using one of the deployment methods below, note:
 1) Choose 'docker' as the executor.
 1) Choose 'alpine:latest' as the default Docker image.
 
+## Linux
+
+See [installation from package manager](https://docs.gitlab.com/runner/install/linux-repository.html):
+
+```bash
+ # For Debian/Ubuntu/Mint
+ curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+
+ # For RHEL/CentOS/Fedora
+ curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | sudo bash
+```
+
+Install:
+
+```bash
+ # For Debian/Ubuntu/Mint
+ sudo apt-get install gitlab-runner
+
+ # For RHEL/CentOS/Fedora
+ sudo yum install gitlab-runner
+```
 
 ## MacOS
 
