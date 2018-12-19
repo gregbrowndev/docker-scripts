@@ -6,7 +6,7 @@ This provides instructions on various deployments for Gitlab CI Runner. If you a
 
 ## Run Task Locally
 
-With the Runner installed locally, you can use `gitlab-runner exec docker [task]` in your project root and it will execute `[task]` from the local _.gitlab-ci.yml_ file, e.g. `my-build-step`, `test1`, etc.
+With the Runner installed locally, you can use `gitlab-runner exec docker --docker-privileged [task]` in your project root and it will execute `[task]` from the local _.gitlab-ci.yml_ file, e.g. `my-build-step`, `test1`, etc. The `--docker-privileged` is necessary when using Docker-in-Docker.
 
 
 ## Registering the Runner
