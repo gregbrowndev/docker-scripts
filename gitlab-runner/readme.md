@@ -2,9 +2,12 @@
 
 ## Overview
 
-This provides a Docker Compose deployment for Gitlab's Runner which can be used to running CI-CD jobs for registered project(s).
+This provides instructions on various deployments for Gitlab CI Runner. If you are developing a CI-CD pipeline or want to run the tests locally, it is recommended to install the runner directly on your dev machine. This is to avoid complexity in having to bind mount your source code into the container.
 
-Note - I would actually recommend installing the Runner directly, since the containerised runner is more awkward to give access to your code. With the Runner installed locally, you can use `gitlab-runner exec docker [task]` in your project root and it will execute `[task]` from the local _.gitlab-ci.yml_ file.
+## Run Task Locally
+
+With the Runner installed locally, you can use `gitlab-runner exec docker [task]` in your project root and it will execute `[task]` from the local _.gitlab-ci.yml_ file, e.g. `my-build-step`, `test1`, etc.
+
 
 ## Registering the Runner
 
@@ -24,6 +27,21 @@ When registering a runner using one of the deployment methods below, note:
 1) Can leave 'tags' blank.
 1) Choose 'docker' as the executor.
 1) Choose 'alpine:latest' as the default Docker image.
+
+
+### Using Docker-in-Docker 
+
+To be able to build, test and deploy Docker images we can configure the Runner to use Docker-in-Docker:
+
+```shell
+sudo gitlab-runner register -n \
+   --url https://gitlab.com/ \
+   --registration-token REGISTRATION_TOKEN \
+   --executor docker \
+   --description "My Docker Runner" \
+   --docker-image "docker:stable" \
+   --docker-privileged
+```
 
 ## Linux
 
