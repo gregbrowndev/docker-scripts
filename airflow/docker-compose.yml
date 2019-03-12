@@ -5,6 +5,7 @@ volumes:
 
 services:
     webserver:
+        restart: always
         build:
             context: .
             dockerfile: ./Dockerfile
@@ -27,7 +28,7 @@ services:
             - './apps:/apps'
             - 'airflow-logs:/usr/local/airflow/logs'
         ports:
-            - '8080:8080'
+            - '8085:8080'
         command: webserver
         healthcheck:
             test: [CMD-SHELL, '[ -f /usr/local/airflow/airflow-webserver.pid ]']

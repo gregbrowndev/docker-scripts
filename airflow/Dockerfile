@@ -23,11 +23,11 @@ RUN usermod --non-unique --uid $UID airflow && groupmod --non-unique --gid $GID 
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install -U pip pipenv
 
-COPY ./requirements.txt /requirements.txt
-RUN pip install --no-cache-dir -r /requirements.txt  \
-    && rm -rf /requirements.txt
+COPY ./Pipfile ./Pipfile.lock ./
+RUN pipenv install --system --deploy
 
 USER airflow
 
