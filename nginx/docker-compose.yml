@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  backend:
+    image: python:3.6
+    command: python -m http.server 8000
+
+  nginx:
+     build:
+       context: .
+       dockerfile: ./Dockerfile
+     depends_on:
+       - backend
+     ports:
+       - "80:80"
+       - "443:443"
+     volumes:
+       - ./local.crt:/etc/ssl/certs/server.crt
+       - ./local.key:/etc/ssl/private/server.key
