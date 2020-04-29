@@ -23,3 +23,9 @@ Attach an ACL to make it readable:
 ```shell
 aws --endpoint-url=http://localhost:4572 s3api put-bucket-acl --bucket django --acl public-read
 ```
+
+List buckets to verify it worked:
+
+```shell
+aws --endpoint-url=http://localhost:4572 s3 ls s3://django
+```

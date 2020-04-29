@@ -1,0 +1,44 @@
+version: '3'
+
+services: 
+  sentry: &sentry
+    image: sentry
+    environment: 
+      - SENTRY_SECRET_KEY=!94mn9g*n&e%7(858n520tr54e47*orai*jrk6tqgv40a^4m+m
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_POSTGRES_HOST=db
+      - SENTRY_DB_USER=sentry
+      - SENTRY_DB_PASSWORD=sentry
+      - SENTRY_DB_NAME=sentry
+    depends_on: 
+      - redis
+      - db
+    ports:
+      - "9000:9000"
+
+  redis:
+    image: redis
+    restart: always
+  
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: sentry
+      POSTGRES_PASSWORD: sentry
+      POSTGRES_DB: sentry
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  worker:
+    <<: *sentry
+    ports: []
+    command: worker
+
+  beat:
+    <<: *sentry
+    ports: []
+    command: cron
+
+volumes:
+  db: {}
