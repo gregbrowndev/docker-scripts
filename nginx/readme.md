@@ -25,10 +25,25 @@ Before you can use the Root SSL certificate to issue a domain certificate, you m
 
 On Centos:
 
-* Install ca-certificates package: `sudo yum install ca-certificates`
-* Enable the dynamic CA configuration feature: `sudo update-ca-trust force-enable`
-* Add it as a new file to _/etc/pki/ca-trust/source/anchors/_: `sudo cp localhost.crt /etc/pki/ca-trust/source/anchors/`
-* Use command: `sudo update-ca-trust extract`
+* Install ca-certificates package and enable the dynamic CA configuration feature:
+
+    ```shell
+    sudo yum install ca-certificates
+    sudo update-ca-trust force-enable
+    ```
+
+* Add it as a new file to _/etc/pki/ca-trust/source/anchors/_: 
+
+    ```shell
+    sudo cp localhost.crt /etc/pki/ca-trust/source/anchors/
+    ```
+
+* Use command: 
+    
+    ```shell
+    sudo update-ca-trust extract
+    ```
+
 
 ### Step 3 - Add domain to /etc/hosts
 
