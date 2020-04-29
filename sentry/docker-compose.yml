@@ -3,6 +3,7 @@ version: '3'
 services: 
   sentry: &sentry
     image: sentry
+    container_name: sentry_web_1
     environment: 
       - SENTRY_SECRET_KEY=!94mn9g*n&e%7(858n520tr54e47*orai*jrk6tqgv40a^4m+m
       - SENTRY_REDIS_HOST=redis
@@ -32,13 +33,15 @@ services:
 
   worker:
     <<: *sentry
+    container_name: sentry_worker_1
     ports: []
-    command: worker
+    command: run worker
 
   beat:
     <<: *sentry
+    container_name: sentry_beat_1
     ports: []
-    command: cron
+    command: run cron
 
 volumes:
   db: {}
